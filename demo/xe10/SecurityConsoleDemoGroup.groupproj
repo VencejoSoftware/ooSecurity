@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{6CB2001B-1E19-4F9A-BF61-C4B5EF4C5646}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="SecurityConsoleDemo.dproj">
+            <Dependencies>..\..\dll\xe10\SecurityLib.dproj</Dependencies>
+        </Projects>
+        <Projects Include="..\..\dll\xe10\SecurityLib.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="SecurityConsoleDemo" DependsOnTargets="SecurityLib">
+        <MSBuild Projects="SecurityConsoleDemo.dproj"/>
+    </Target>
+    <Target Name="SecurityConsoleDemo:Clean" DependsOnTargets="SecurityLib:Clean">
+        <MSBuild Projects="SecurityConsoleDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SecurityConsoleDemo:Make" DependsOnTargets="SecurityLib:Make">
+        <MSBuild Projects="SecurityConsoleDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SecurityLib">
+        <MSBuild Projects="..\..\dll\xe10\SecurityLib.dproj"/>
+    </Target>
+    <Target Name="SecurityLib:Clean">
+        <MSBuild Projects="..\..\dll\xe10\SecurityLib.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SecurityLib:Make">
+        <MSBuild Projects="..\..\dll\xe10\SecurityLib.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="SecurityConsoleDemo;SecurityLib"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="SecurityConsoleDemo:Clean;SecurityLib:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="SecurityConsoleDemo:Make;SecurityLib:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
